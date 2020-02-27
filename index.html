@@ -1,1 +1,84 @@
-<h1>Hello</h1>
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Patatap</title>
+
+    <script type="text/javascript" src="paper-full.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.core.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="shapes.css">
+    <script type="text/paperscript" canvas="myCanvas">
+    
+var shapes = [];
+    
+var keyData = {
+
+a: {
+sound: new Howl({
+  src: ['sounds/bubbles.mp3']
+}),
+color: '#1abc9c'
+},
+b: {
+sound: new Howl({
+  src: ['sounds/clay.mp3']
+}),
+color: '#2ecc71'
+}
+}
+
+
+function onFrame(event) {
+    for (var i = 0; i < shapes.length; i++) {
+    //shrink pressed button
+    shapes[i].fillColor.hue += 0.2;
+    shapes[i].scale(.9);
+  }
+
+}
+
+    console.log("hello");
+    function onKeyDown(event) {
+    // When a key is pressed, set the content of the text item:
+      if(keyData[event.key]){
+        switch(event.key){
+        //display circle when a is pressed
+        case "a":
+        console.log("PF");
+        var maxPoint = new Point(view.size.width, view.size.height);
+        var randomPoint = Point.random();
+        var point = maxPoint * randomPoint;
+        var path = new Path.Circle(point, 200);
+        path.fillColor=keyData[event.key].color;
+        shapes.push(path);
+        keyData[event.key].sound.play();
+        break;
+
+        //display rectangle when b is pressed
+        case "b":
+        console.log("PF");
+        var maxPoint = new Point(view.size.width, view.size.height);
+        var randomPoint = Point.random();
+        var point = maxPoint * randomPoint;
+        var randomPoint2 = Point.random();
+        var point2 = maxPoint * randomPoint2;
+        var rectangle = new Rectangle(point, point2);
+        var radius = new Size(40, 20);
+        var path = new Path.Rectangle(rectangle, radius);
+        path.fillColor=keyData[event.key].color;
+        shapes.push(path);
+        keyData[event.key].sound.play();
+        break;
+
+        }
+      }
+    }
+
+
+
+    </script>
+</head>
+<body>
+    <canvas id="myCanvas" resize></canvas>
+</body>
+</html>
